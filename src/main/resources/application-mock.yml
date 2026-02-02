@@ -1,0 +1,7 @@
+spring:
+  profiles:
+    include: default
+
+kb:
+  ai:
+    mock: true

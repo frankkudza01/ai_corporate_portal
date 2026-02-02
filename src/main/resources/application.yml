@@ -1,0 +1,62 @@
+server:
+  port: 8080
+
+spring:
+  application:
+    name: ai-native-corporate-kb
+
+  datasource:
+    url: ${KB_DB_URL:jdbc:postgresql://localhost:5432/kb}
+    username: ${KB_DB_USER:kb}
+    password: ${KB_DB_PASSWORD:kb}
+  jpa:
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        jdbc:
+          time_zone: UTC
+  flyway:
+    enabled: true
+
+  servlet:
+    multipart:
+      max-file-size: 30MB
+      max-request-size: 35MB
+
+spring.ai:
+  vectorstore:
+    pgvector:
+      host: ${KB_PGV_HOST:localhost}
+      port: ${KB_PGV_PORT:5432}
+      database: ${KB_PGV_DB:kb}
+      user: ${KB_PGV_USER:kb}
+      password: ${KB_PGV_PASSWORD:kb}
+      table: ${KB_PGV_TABLE:kb_vectors}
+      schema: ${KB_PGV_SCHEMA:public}
+      initialize-schema: true
+      dimensions: ${KB_VECTOR_DIMENSIONS:1536}
+
+kb:
+  storage:
+    upload-dir: ${KB_UPLOAD_DIR:./data/uploads}
+  chunking:
+    max-chars: ${KB_CHUNK_MAX_CHARS:1400}
+    overlap-chars: ${KB_CHUNK_OVERLAP_CHARS:200}
+  retrieval:
+    top-k: ${KB_TOP_K:5}
+  security:
+    user: ${KB_SECURITY_USER:kb_admin}
+    password: ${KB_SECURITY_PASSWORD:kb_admin}
+
+springdoc:
+  api-docs:
+    path: /v3/api-docs
+  swagger-ui:
+    path: /swagger-ui
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,metrics

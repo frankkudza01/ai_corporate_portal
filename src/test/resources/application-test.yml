@@ -1,0 +1,13 @@
+spring:
+  jpa:
+    hibernate:
+      ddl-auto: update
+  flyway:
+    enabled: true
+
+kb:
+  chunking:
+    max-chars: 800
+    overlap-chars: 100
+  retrieval:
+    top-k: 3
